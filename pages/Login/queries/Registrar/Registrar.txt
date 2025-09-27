@@ -1,0 +1,6 @@
+INSERT INTO users (name, email, password)
+  VALUES (
+		{{this.params.nome}}, 
+		{{this.params.email}}, 
+		{{this.params.senhaComHash}}
+	);

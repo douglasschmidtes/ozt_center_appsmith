@@ -1,0 +1,10 @@
+{
+  "accessor": [
+    "react_dnd_html__backend"
+  ],
+  "defs": "{\"!name\":\"LIB/react_dnd_html__backend\",\"react_dnd_html__backend\":{\"HTML5Backend\":{\"!type\":\"fn()\",\"prototype\":{}},\"NativeTypes\":{\"FILE\":{\"!type\":\"string\"},\"HTML\":{\"!type\":\"string\"},\"TEXT\":{\"!type\":\"string\"},\"URL\":{\"!type\":\"string\"}},\"getEmptyImage\":{\"!type\":\"fn()\",\"prototype\":{}}}}",
+  "name": "react_dnd_html__backend",
+  "uidString": "react_dnd_html__backend_https://esm.sh/react-dnd-html5-backend@16.0.1?dev",
+  "url": "https://esm.sh/react-dnd-html5-backend@16.0.1?dev",
+  "version": "16.0.1"
+}

@@ -1,0 +1,10 @@
+{
+  "accessor": [
+    "bcrypt"
+  ],
+  "defs": "{\"!name\":\"LIB/bcrypt\",\"bcrypt\":{\"setRandomFallback\":{\"!type\":\"fn()\",\"prototype\":{}},\"genSaltSync\":{\"!type\":\"fn()\",\"prototype\":{}},\"genSalt\":{\"!type\":\"fn()\",\"prototype\":{}},\"hashSync\":{\"!type\":\"fn()\",\"prototype\":{}},\"hash\":{\"!type\":\"fn()\",\"prototype\":{}},\"compareSync\":{\"!type\":\"fn()\",\"prototype\":{}},\"compare\":{\"!type\":\"fn()\",\"prototype\":{}},\"getRounds\":{\"!type\":\"fn()\",\"prototype\":{}},\"getSalt\":{\"!type\":\"fn()\",\"prototype\":{}},\"truncates\":{\"!type\":\"fn()\",\"prototype\":{}},\"encodeBase64\":{\"!type\":\"fn()\",\"prototype\":{}},\"decodeBase64\":{\"!type\":\"fn()\",\"prototype\":{}}}}",
+  "name": "bcrypt",
+  "uidString": "bcrypt_https://cdn.jsdelivr.net/npm/bcryptjs@3.0.2/umd/index.min.js",
+  "url": "https://cdn.jsdelivr.net/npm/bcryptjs@3.0.2/umd/index.min.js",
+  "version": "3.0.2"
+}
