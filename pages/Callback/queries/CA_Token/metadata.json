@@ -84,7 +84,7 @@
     ],
     "name": "CA_Token",
     "pageId": "Callback",
-    "runBehaviour": "AUTOMATIC",
-    "userSetOnLoad": false
+    "runBehaviour": "MANUAL",
+    "userSetOnLoad": true
   }
 }
