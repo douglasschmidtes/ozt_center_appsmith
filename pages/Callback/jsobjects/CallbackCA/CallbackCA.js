@@ -20,13 +20,15 @@ export default {
       // showModal('mdlLoading');
 
       UI.setStatus("Conectando à Conta Azul…", 10);
-      await UI.sleep(200);
+      await UI.sleep(400);
 
       UI.setStatus("Carregando credenciais do app…", 30);
       await getCAApp.run();
+			await UI.sleep(100);
 
       UI.setStatus("Trocando código por token…", 60);
       const tok = await CA_Token.run();
+			await UI.sleep(100);
 
       UI.setStatus("Salvando tokens…", 85);
       await saveTokens.run({
@@ -35,6 +37,7 @@ export default {
         conn_label: s.conn_label || "default",
         code
       });
+			await UI.sleep(100);
 
       UI.setStatus("Conexão concluída!", 100);
       showAlert("Conta Azul conectada!", "success");
