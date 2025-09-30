@@ -10,20 +10,42 @@ export default {
 
     const s = this.ctx(); // { client_row_id, app_id, conn_label }
     if (!s.client_row_id || !s.app_id) {
+      UI.setStatus("State inválido/sessão perdida. Clique em Conectar novamente.", 100);
       showAlert("State inválido/sessão perdida. Clique em Conectar novamente.", "error");
       return;
     }
 
-    await getCAApp.run();          // precisa vir antes do CA_Token
-    const tok = await CA_Token.run();    // troca code -> token
-    await saveTokens.run({               // salva no modelo explícito
-      client_id:  s.client_row_id,
-      app_id:     s.app_id,
-      conn_label: s.conn_label || "default",
-      code
-    });
+    try {
+      // (Se estiver usando Modal)
+      // showModal('mdlLoading');
 
-    showAlert("Conta Azul conectada!", "success");
-    navigateTo("Credenciais");
+      UI.setStatus("Conectando à Conta Azul…", 10);
+      await UI.sleep(200);
+
+      UI.setStatus("Carregando credenciais do app…", 30);
+      await getCAApp.run();
+
+      UI.setStatus("Trocando código por token…", 60);
+      const tok = await CA_Token.run();
+
+      UI.setStatus("Salvando tokens…", 85);
+      await saveTokens.run({
+        client_id:  s.client_row_id,
+        app_id:     s.app_id,
+        conn_label: s.conn_label || "default",
+        code
+      });
+
+      UI.setStatus("Conexão concluída!", 100);
+      showAlert("Conta Azul conectada!", "success");
+      await UI.sleep(600);
+
+      // closeModal('mdlLoading');
+      navigateTo("Credenciais");
+    } catch (e) {
+      UI.setStatus("Falha ao conectar. Tente novamente.", 100);
+      showAlert("Falha ao finalizar conexão: " + (e?.message || e), "error");
+      // closeModal('mdlLoading');
+    }
   }
 }
