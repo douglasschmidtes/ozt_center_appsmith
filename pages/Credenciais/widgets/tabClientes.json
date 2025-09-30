@@ -310,7 +310,7 @@
       "label": "Conectar CA",
       "labelColor": "#FFFFFF",
       "notation": "standard",
-      "onClick": "{{getCAApp.run();\nOAuthCA.start();}}",
+      "onClick": "{{showModal(mdConexaoCA.name).then(() => {\n  resetWidget(\"Modal1\", true);\n});}}",
       "originalId": "customColumn1",
       "sticky": "",
       "textSize": "0.875rem",
