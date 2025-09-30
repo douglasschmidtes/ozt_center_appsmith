@@ -1,19 +1,31 @@
 INSERT INTO public.credenciais_clientes
-  (client_id, app_id, conn_label, title, access_token, refresh_token, "CODIGO_AUTORIZACAO")
+  (client_id, app_id, conn_label, title,
+   access_token, refresh_token, "CODIGO_AUTORIZACAO",
+   token_type, scope, expires_in, fetched_at, expires_at)
 VALUES
   (
     {{ this.params.client_id }},
     {{ this.params.app_id }},
-    {{ this.params.conn_label }},
-    {{ "'CA:" + this.params.client_id + ":" + this.params.app_id + ":" + this.params.conn_label }},
+    {{ this.params.conn_label || 'default' }},
+    {{ "'CA:" + this.params.client_id + ":" + this.params.app_id + ":" + (this.params.conn_label || 'default') }},
     {{ CA_Token.data.access_token }},
     {{ CA_Token.data.refresh_token }},
-    {{ this.params.code }}
+    {{ this.params.code }},
+    {{ CA_Token.data.token_type ? "'" + CA_Token.data.token_type + "'" : "'Bearer'" }},
+    {{ CA_Token.data.scope ? "'" + CA_Token.data.scope + "'" : "NULL" }},
+    {{ CA_Token.data.expires_in || 3600 }},
+    NOW(),
+    NOW() + (({{ CA_Token.data.expires_in || 3600 }}) || ' seconds')::interval
   )
 ON CONFLICT (client_id, app_id, conn_label)
 DO UPDATE SET
   access_token         = EXCLUDED.access_token,
   refresh_token        = EXCLUDED.refresh_token,
-  "CODIGO_AUTORIZACAO" = EXCLUDED."CODIGO_AUTORIZACAO"
+  "CODIGO_AUTORIZACAO" = EXCLUDED."CODIGO_AUTORIZACAO",
+  token_type           = COALESCE(EXCLUDED.token_type, 'Bearer'),
+  scope                = EXCLUDED.scope,
+  expires_in           = EXCLUDED.expires_in,
+  fetched_at           = NOW(),
+  expires_at           = EXCLUDED.expires_at
 RETURNING id;
 
