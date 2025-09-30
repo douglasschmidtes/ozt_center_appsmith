@@ -1,4 +1,5 @@
+-- versão com filtro por id (mais segura)
 SELECT id, client_id, client_secret, redirect_uri
 FROM public.credenciais_aplicativos
-WHERE software = 'Conta Azul'
+WHERE id = {{ CallbackCA.ctx().app_id }}   -- usa o state decodificado
 LIMIT 1;

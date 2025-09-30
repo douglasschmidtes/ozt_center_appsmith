@@ -5,7 +5,7 @@
   "pluginType": "DB",
   "unpublishedAction": {
     "actionConfiguration": {
-      "body": "SELECT id, client_id, client_secret, redirect_uri\nFROM public.credenciais_aplicativos\nWHERE software = 'Conta Azul'\nLIMIT 1;\n",
+      "body": "-- versão com filtro por id (mais segura)\nSELECT id, client_id, client_secret, redirect_uri\nFROM public.credenciais_aplicativos\nWHERE id = {{ CallbackCA.ctx().app_id }}   -- usa o state decodificado\nLIMIT 1;\n",
       "encodeParamsToggle": true,
       "paginationType": "NONE",
       "pluginSpecifiedTemplates": [
@@ -22,7 +22,11 @@
       "name": "ozt_integration_center",
       "pluginId": "postgres-plugin"
     },
-    "dynamicBindingPathList": [],
+    "dynamicBindingPathList": [
+      {
+        "key": "body"
+      }
+    ],
     "name": "getCAApp",
     "pageId": "Callback",
     "runBehaviour": "MANUAL",

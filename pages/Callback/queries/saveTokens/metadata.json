@@ -5,7 +5,7 @@
   "pluginType": "DB",
   "unpublishedAction": {
     "actionConfiguration": {
-      "body": "INSERT INTO public.credenciais_clientes\n  (client_id, app_id, conn_label, title, access_token, refresh_token, \"CODIGO_AUTORIZACAO\")\nVALUES\n  (\n    {{ appsmith.store.ca_client_row_id }},\n    {{ getCAApp.data[0].id }},\n    {{ appsmith.store.conn_label || 'default' }},\n    {{ \"'CA:\" + appsmith.store.ca_client_row_id + \":\" + getCAApp.data[0].id + \":\" + (appsmith.store.conn_label || 'default') }},\n    {{ CA_Token.data.access_token }},\n    {{ CA_Token.data.refresh_token }},\n    {{ appsmith.URL.queryParams.code }}\n  )\nON CONFLICT (client_id, app_id, conn_label)\nDO UPDATE SET\n  access_token         = EXCLUDED.access_token,\n  refresh_token        = EXCLUDED.refresh_token,\n  \"CODIGO_AUTORIZACAO\" = EXCLUDED.\"CODIGO_AUTORIZACAO\"\nRETURNING id;\n",
+      "body": "INSERT INTO public.credenciais_clientes\n  (client_id, app_id, conn_label, title, access_token, refresh_token, \"CODIGO_AUTORIZACAO\")\nVALUES\n  (\n    {{ this.params.client_id }},\n    {{ this.params.app_id }},\n    {{ this.params.conn_label }},\n    {{ \"'CA:\" + this.params.client_id + \":\" + this.params.app_id + \":\" + this.params.conn_label }},\n    {{ CA_Token.data.access_token }},\n    {{ CA_Token.data.refresh_token }},\n    {{ this.params.code }}\n  )\nON CONFLICT (client_id, app_id, conn_label)\nDO UPDATE SET\n  access_token         = EXCLUDED.access_token,\n  refresh_token        = EXCLUDED.refresh_token,\n  \"CODIGO_AUTORIZACAO\" = EXCLUDED.\"CODIGO_AUTORIZACAO\"\nRETURNING id;\n\n",
       "encodeParamsToggle": true,
       "paginationType": "NONE",
       "pluginSpecifiedTemplates": [

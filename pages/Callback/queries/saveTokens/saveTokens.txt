@@ -2,13 +2,13 @@ INSERT INTO public.credenciais_clientes
   (client_id, app_id, conn_label, title, access_token, refresh_token, "CODIGO_AUTORIZACAO")
 VALUES
   (
-    {{ appsmith.store.ca_client_row_id }},
-    {{ getCAApp.data[0].id }},
-    {{ appsmith.store.conn_label || 'default' }},
-    {{ "'CA:" + appsmith.store.ca_client_row_id + ":" + getCAApp.data[0].id + ":" + (appsmith.store.conn_label || 'default') }},
+    {{ this.params.client_id }},
+    {{ this.params.app_id }},
+    {{ this.params.conn_label }},
+    {{ "'CA:" + this.params.client_id + ":" + this.params.app_id + ":" + this.params.conn_label }},
     {{ CA_Token.data.access_token }},
     {{ CA_Token.data.refresh_token }},
-    {{ appsmith.URL.queryParams.code }}
+    {{ this.params.code }}
   )
 ON CONFLICT (client_id, app_id, conn_label)
 DO UPDATE SET
@@ -16,3 +16,4 @@ DO UPDATE SET
   refresh_token        = EXCLUDED.refresh_token,
   "CODIGO_AUTORIZACAO" = EXCLUDED."CODIGO_AUTORIZACAO"
 RETURNING id;
+

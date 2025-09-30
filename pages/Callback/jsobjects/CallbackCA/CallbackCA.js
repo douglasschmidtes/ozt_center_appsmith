@@ -1,24 +1,29 @@
 export default {
+  ctx() {
+    try { return JSON.parse(atob(appsmith.URL.queryParams.state || "")) || {}; }
+    catch { return {}; }
+  },
+
   async handle() {
-    const code  = appsmith.URL.queryParams.code;
-    const state = appsmith.URL.queryParams.state;
+    const code = appsmith.URL.queryParams.code;
+    if (!code) return;
 
-    if (!code) return; // abriu a página sem ?code, não faz nada
-
-    // anti-CSRF: compara state
-    if (state !== appsmith.store.ca_state) {
-      showAlert("State inválido. Tente novamente.", "error");
+    const s = this.ctx(); // { client_row_id, app_id, conn_label }
+    if (!s.client_row_id || !s.app_id) {
+      showAlert("State inválido/sessão perdida. Clique em Conectar novamente.", "error");
       return;
     }
 
-    try {
-			await getCAApp.run(); // Pega Credendiais
-      await CA_Token.run();     // troca code -> token
-      await saveTokens.run();   // grava no Postgres e cria os vínculos M2M
-      showAlert("Conta Azul conectada!", "success");
-      navigateTo("Credenciais"); // volte para a página principal
-    } catch (e) {
-      showAlert("Falha ao finalizar conexão: " + (e?.message || e), "error");
-    }
+    await getCAApp.run();          // precisa vir antes do CA_Token
+    const tok = await CA_Token.run();    // troca code -> token
+    await saveTokens.run({               // salva no modelo explícito
+      client_id:  s.client_row_id,
+      app_id:     s.app_id,
+      conn_label: s.conn_label || "default",
+      code
+    });
+
+    showAlert("Conta Azul conectada!", "success");
+    navigateTo("Credenciais");
   }
 }
