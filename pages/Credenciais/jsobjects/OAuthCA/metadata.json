@@ -1,0 +1,11 @@
+{
+  "gitSyncId": "68b8d5506cfba469c1f6f347_d75f8096-3767-4ee1-9413-f67b34a89d87",
+  "id": "Credenciais_OAuthCA",
+  "unpublishedCollection": {
+    "name": "OAuthCA",
+    "pageId": "Credenciais",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": []
+  }
+}

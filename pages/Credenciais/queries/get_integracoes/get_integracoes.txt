@@ -1,0 +1,19 @@
+SELECT
+  c.nome_empresa,
+  c.cnpj,
+  ca.software,
+	ca.nome_aplicacao
+	
+FROM public._nc_m2m_credenciais_cli_clients mcc         -- M2M: clients ↔ credenciais_clientes
+LEFT JOIN public.clients c
+       ON c.id = mcc.clients_id
+LEFT JOIN public.credenciais_clientes cc
+       ON cc.id = mcc.credenciais_clientes_id
+LEFT JOIN public._nc_m2m_credenciais_cli_credenciais_apl mca  -- M2M: credenciais_clientes ↔ credenciais_aplicativos
+       ON mca.credenciais_clientes_id = cc.id
+LEFT JOIN public.credenciais_aplicativos ca
+       ON ca.id = mca.credenciais_aplicativos_id
+WHERE (
+  {{ tabClientes.selectedRow.id ? `mcc.clients_id = ${tabClientes.selectedRow.id}` : '1=1' }}
+)
+

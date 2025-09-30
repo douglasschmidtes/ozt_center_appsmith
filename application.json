@@ -36,6 +36,14 @@
     {
       "id": "Home",
       "isDefault": false
+    },
+    {
+      "id": "Credenciais",
+      "isDefault": false
+    },
+    {
+      "id": "Callback",
+      "isDefault": false
     }
   ],
   "unpublishedAppLayout": {

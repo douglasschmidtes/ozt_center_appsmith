@@ -1,0 +1,4 @@
+SELECT id, client_id, client_secret, redirect_uri
+FROM public.credenciais_aplicativos
+WHERE software = 'Conta Azul'
+LIMIT 1;
