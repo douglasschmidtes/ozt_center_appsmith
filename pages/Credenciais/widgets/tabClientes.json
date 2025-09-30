@@ -177,6 +177,7 @@
   "parentColumnSpace": 19.8125,
   "parentId": "0",
   "parentRowSpace": 10,
+  "primaryColumnId": "id",
   "primaryColumns": {
     "cnpj": {
       "alias": "cnpj",
